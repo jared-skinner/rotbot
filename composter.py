@@ -1,6 +1,11 @@
 from datetime import datetime, time
 from time import sleep
 import logging
+import sys
+
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
 
 logger = logging.getLogger(__name__)
 
@@ -8,6 +13,7 @@ MIDNIGHT = time(0, 0)
 
 class Composter:
     def __init__(self, Input, Output) -> None:
+        logger.debug("Initializing Composter")
         self.rotation_counter = 0
 
         self.auto_ran_today = False
@@ -104,9 +110,9 @@ class Composter:
         self.outputs["forward"].disable()
 
     def enable_reverse(self) -> None:
-        logger.info(f"Running backward")
+        logger.info(f"Running reverse")
         self.outputs["reverse"].enable()
 
     def disable_reverse(self) -> None:
-        logger.info(f"Stopping backward")
+        logger.info(f"Stopping reverse")
         self.outputs["reverse"].disable()

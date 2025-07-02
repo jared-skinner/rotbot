@@ -33,8 +33,7 @@ class GPIOOutputInterface(ABC):
         exception("This method should be overridden in subclasses.")
 
 
-import keyboard
-
+import json
 
 class MockGPIOInput(GPIOInputInterface):
     def __init__(self, name, pin_number):
@@ -42,14 +41,17 @@ class MockGPIOInput(GPIOInputInterface):
 
     def read(self) -> bool:
         """Mock reading the state of the GPIO input pin."""
-        logger.info(f"reading input {self.name} on pin {self.pin_number}")
+
         # For testing purposes, we can return a fixed value or simulate a state
-        if keyboard.is_pressed(self.pin_number):
-            logger.info(f"MockGPIOInput {self.name} read: True on pin {self.pin_number}")
-            return True
-        else:
-            logger.info(f"MockGPIOInput {self.name} read: False on pin {self.pin_number}")
-            return False
+        with open("mock_io.json", 'r') as file:
+            data = json.load(file)
+
+            if data[str(self.pin_number)] == "on":
+                logger.info(f"Input {self.name} read: True on pin {self.pin_number}")
+                return True
+            else:
+                logger.info(f"Input {self.name} read: False on pin {self.pin_number}")
+                return False
 
 class MockGPIOOutput(GPIOOutputInterface):
     def __init__(self, name, pin_number):
@@ -58,12 +60,12 @@ class MockGPIOOutput(GPIOOutputInterface):
     def enable(self) -> None:
         """Mock enabling the GPIO output pin."""
         # For testing purposes, we can just print or log the action
-        logger.info(f"MockGPIOOutput {self.name} enabled on pin {self.pin_number}")
+        logger.info(f"Output {self.name} enabled on pin {self.pin_number}")
 
     def disable(self) -> None:
         """Mock disabling the GPIO output pin."""
         # For testing purposes, we can just print or log the action
-        logger.info(f"MockGPIOOutput {self.name} disabled on pin {self.pin_number}")
+        logger.info(f"Output {self.name} disabled on pin {self.pin_number}")
 
 # enable once installed via pip
 #
