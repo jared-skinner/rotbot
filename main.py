@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
-from mock_gpio import MockGPIOInput as PiInput, MockGPIOOutput as PiOutput
+from gpio_mock import MockGPIOInput as PiInput, MockGPIOOutput as PiOutput
 #from gpio_zero import GPIOZeroInput as PiInput, GPIOZeroOutput as PiOutput
 
 
