@@ -45,6 +45,13 @@ class Composter:
             "day_counter": Output("day_counter", 17)
         }
 
+        self.clear_outputs()
+
+    def clear_outputs(self) -> None:
+        logger.info("Clearing outputs")
+        for output in self.outputs.values():
+            output.disable()
+
     def read_input(self, input_name: str) -> bool:
         return self.inputs[input_name].read()
 
