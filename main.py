@@ -1,14 +1,22 @@
-from composter import Composter
-from time import sleep
 import logging
-import os
-import sys
+
+from logging.handlers import RotatingFileHandler
+from time import sleep
+
+from composter import Composter
+from gpio_zero import GPIOZeroInput as PiInput, GPIOZeroOutput as PiOutput
+
+log_file = "rotbot.log"
+max_log_size = 1024 * 1024  # 1 MB
+backup_count = 2
+
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-
-from gpio_mock import MockGPIOInput as PiInput, MockGPIOOutput as PiOutput
-#from gpio_zero import GPIOZeroInput as PiInput, GPIOZeroOutput as PiOutput
+handler = RotatingFileHandler(log_file, maxBytes=max_log_size, backupCount=backup_count)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 
 def print_header():
@@ -24,36 +32,30 @@ def print_header():
 - A Skinner Project
 
 
-
 """)
 
 def main(composter: Composter, sleep_time:float = 0.1) -> None:
-    os.system('cls' if os.name == 'nt' else 'clear')
+    print_header()
 
     while True:
-        print_header()
-
+        logger.debug("STARTING LOOP")
         logger.debug("Disable Prox Switch - For Safety")
         # disable prox sensor every cycle for safety
         composter.disable_prox_switch()
 
-        print("\n")
-        logger.debug("Reset Auto Run Flag - Just after midnight")
+        logger.debug("\nReset Auto Run Flag - Just after midnight")
         # reset auto run if necessary
         composter.reset_auto_run()
 
         # clear forward/reverse, if necessary
-        print("\n")
-        logger.debug("Clear forward/reverse")
+        logger.debug("\nClear forward/reverse")
         if not composter.read_input("forward") or not composter.read_input("manual"):
             composter.disable_forward()
 
         if not composter.read_input("reverse") or not composter.read_input("manual"):
             composter.disable_reverse()
 
-
-        print("\n")
-        logger.debug("Manual Actions")
+        logger.debug("\nManual Actions")
         if composter.read_input("manual"):
             if composter.read_input("forward"):
                 # make it so this doesn't start and stop
@@ -66,7 +68,6 @@ def main(composter: Composter, sleep_time:float = 0.1) -> None:
                 run_time = 10 # 10 seconds for testing
                 composter.run(time_seconds = run_time) # 15 minutes
 
-        print("\n")
         logger.debug("Auto Actions")
         if composter.read_input("auto"):
             composter.auto_run()
@@ -74,8 +75,7 @@ def main(composter: Composter, sleep_time:float = 0.1) -> None:
             pass
 
         sleep(sleep_time)
-
-        os.system('cls' if os.name == 'nt' else 'clear')
+        logger.debug("ENDING LOOP\n\n")
 
 if __name__ == "__main__":
     composter = Composter(PiInput, PiOutput)

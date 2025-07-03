@@ -1,16 +1,26 @@
-from gpio_interface import GPIOInputInterface, GPIOOutputInterface
-import logging
-import sys
-
-from gpiozero import LED, Button
-
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-logger = logging.getLogger(__name__)
-
 """
 Using gpiozero library to create a GPIO interface.
 https://gpiozero.readthedocs.io/
 """
+
+import logging
+from logging.handlers import RotatingFileHandler
+
+from gpio_interface import GPIOInputInterface, GPIOOutputInterface
+
+from gpiozero import Button, OutputDevice
+
+log_file = "rotbot.log"
+max_log_size = 1024 * 1024  # 1 MB
+backup_count = 5
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+handler = RotatingFileHandler(log_file, maxBytes=max_log_size, backupCount=backup_count)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 class GPIOZeroInput(GPIOInputInterface):
     def __init__(self, name, pin_number):
@@ -19,18 +29,20 @@ class GPIOZeroInput(GPIOInputInterface):
 
     def read(self) -> bool:
         """Read the state of the GPIO input pin."""
+        logger.debug(f"Input {self.name} read: {self.pin.is_pressed} on pin {self.pin_number}")
         return self.pin.is_pressed
 
 class GPIOZeroOutput(GPIOOutputInterface):
     def __init__(self, name,pin_number):
         super().__init__(name, pin_number)
-        self.pin = LED(pin_number)
+        self.pin = OutputDevice(pin_number, active_high=False, initial_value=False)
 
     def enable(self) -> None:
         """Enable the GPIO output pin."""
         self.pin.on()
+        logger.debug(f"Output {self.name} on pin {self.pin_number} turned on")
 
     def disable(self) -> None:
         """Disable the GPIO output pin."""
         self.pin.off()
-
+        logger.debug(f"Output {self.name} on pin {self.pin_number} turned off")

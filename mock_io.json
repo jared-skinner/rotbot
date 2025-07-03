@@ -1,6 +1,6 @@
 {
   "auto": "auto",
-  "1": "on",
+  "1": "off",
 
   "manual": "manual",
   "2": "off",
@@ -15,5 +15,5 @@
   "5": "off",
 
   "ext_run": "ext_run",
-  "6": "off"
+  "6": "on"
 }

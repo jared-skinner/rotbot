@@ -1,19 +1,27 @@
 from datetime import datetime, time
-from time import sleep
+
 import logging
-import sys
+from logging.handlers import RotatingFileHandler
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+from time import sleep
+
+log_file = "composter.log"
+max_log_size = 1024 * 1024  # 1 MB
+backup_count = 5
+
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
-
-logger = logging.getLogger(__name__)
+handler = RotatingFileHandler(log_file, maxBytes=max_log_size, backupCount=backup_count)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
 
 MIDNIGHT = time(0, 0)
 
 class Composter:
     def __init__(self, Input, Output) -> None:
-        logger.debug("Initializing Composter")
+        logger.info("Initializing Composter")
         self.rotation_counter = 0
 
         self.auto_ran_today = False
@@ -22,19 +30,19 @@ class Composter:
         self.auto_run_cycle_count = 4
 
         self.inputs = {
-            "auto": Input("auto", 1),
-            "manual": Input("manual", 2),
-            "forward": Input("forward", 3),
-            "reverse": Input("reverse", 4),
-            "prox": Input("prox", 5),
-            "ext_run": Input("ext_run", 6)
+            "auto": Input("auto", 10),
+            "manual": Input("manual", 9),
+            "forward": Input("forward", 11),
+            "reverse": Input("reverse", 5),
+            "prox": Input("prox", 6),
+            "ext_run": Input("ext_run", 13)
         }
 
         self.outputs = {
-            "forward": Output("forward", 7),
-            "reverse": Output("reverse", 8),
-            "prox": Output("prox", 9),
-            "day_counter": Output("day_counter", 0)
+            "forward": Output("forward", 2),
+            "reverse": Output("reverse", 3),
+            "prox": Output("prox", 4),
+            "day_counter": Output("day_counter", 17)
         }
 
     def read_input(self, input_name: str) -> bool:
@@ -42,7 +50,7 @@ class Composter:
 
     def increment_day_counter(self) -> None:
         self.outputs["day_counter"].enable()
-        sleep(0.1)
+        sleep(1)
         self.outputs["day_counter"].disable()
         logger.info("Incremented day counter")
 
@@ -54,12 +62,13 @@ class Composter:
             prox_enabled = False
             while cycle_count > 0:
                 # TODO: play with this
-                sleep(.001)
+                sleep(.01)
 
                 # this block is written to prevent rereading the same contact.
                 if self.read_input("prox") and prox_enabled == False:
                     prox_enabled = True
                     cycle_count -= 1
+                    sleep(5)
                 elif not self.read_input("prox") and prox_enabled == True:
                     prox_enabled =  False
 
@@ -70,7 +79,8 @@ class Composter:
             self.disable_forward()
 
     def auto_run(self) -> None:
-        if self.can_run_in_auto():
+        #if self.can_run_in_auto():
+        if True:
             self.auto_ran_today = True
             self.enable_prox_switch()
             self.run(cycle_count = self.auto_run_cycle_count)
@@ -102,17 +112,17 @@ class Composter:
         logger.debug("Proximity switch disabled")
 
     def enable_forward(self) -> None:
-        logger.info(f"Running forward ")
+        logger.debug(f"Running forward ")
         self.outputs["forward"].enable()
 
     def disable_forward(self) -> None:
-        logger.info(f"Stopping forward")
+        logger.debug(f"Stopping forward")
         self.outputs["forward"].disable()
 
     def enable_reverse(self) -> None:
-        logger.info(f"Running reverse")
+        logger.debug(f"Running reverse")
         self.outputs["reverse"].enable()
 
     def disable_reverse(self) -> None:
-        logger.info(f"Stopping reverse")
+        logger.debug(f"Stopping reverse")
         self.outputs["reverse"].disable()
