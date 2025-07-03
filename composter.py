@@ -26,7 +26,7 @@ class Composter:
 
         self.auto_ran_today = False
         self.auto_run_start_time = time(2, 0)  # 2:00 AM in 24-hour format
-        self.auto_run_ignore_time = time(6, 0)  # 6:00 AM in 24-hour format
+        self.auto_run_ignore_time = time(2, 30)  # 2:30 AM in 24-hour format
 
         self.auto_run_cycle_count = 4
 
@@ -99,6 +99,20 @@ class Composter:
             logger.info(f"Running composter for {time_seconds} seconds")
             self.enable_forward()
             sleep(time_seconds)
+
+            self.enable_prox_switch()
+            start_time = datetime.now()
+            while True:
+                sleep(0.1)
+
+                if (datetime.now() - start_time).total_seconds() > 1 * 60:
+                    logger.warning("Waiting for prox switch for 1 minute, stopping")
+                    break
+
+                if self.read_input("prox"):
+                    break
+
+            self.disable_prox_switch()
             self.disable_forward()
 
     def auto_run(self) -> None:
