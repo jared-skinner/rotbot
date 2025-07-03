@@ -64,9 +64,8 @@ def main(composter: Composter, sleep_time:float = 0.1) -> None:
                 # make it so this doesn't start and stop
                 composter.enable_reverse()
             elif composter.read_input("ext_run"):
-                #run_time = 15 * 60 # 15 minutes
-                run_time = 10 # 10 seconds for testing
-                composter.run(time_seconds = run_time) # 15 minutes
+                run_time = 15 * 60 # 15 minutes
+                composter.run(time_seconds = run_time)
 
         logger.debug("Auto Actions")
         if composter.read_input("auto"):

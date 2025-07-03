@@ -25,8 +25,12 @@ class Composter:
         self.rotation_counter = 0
 
         self.auto_ran_today = False
-        self.auto_run_start_time = time(2, 0)  # 2:00 AM in 24-hour format
-        self.auto_run_ignore_time = time(6, 0)  # 6:00 AM in 24-hour format
+        #self.auto_run_start_time = time(2, 0)  # 2:00 AM in 24-hour format
+        #self.auto_run_ignore_time = time(6, 0)  # 6:00 AM in 24-hour format
+
+        self.auto_run_start_time = time(12, 50)  # 12:50 PM in 24-hour format
+        self.auto_run_ignore_time = time(13, 0)  # 1:00 PM in 24-hour format
+
         self.auto_run_cycle_count = 4
 
         self.inputs = {
@@ -67,6 +71,12 @@ class Composter:
             logger.info(f"Running composter for {cycle_count} cycles")
             self.enable_forward()
             prox_enabled = False
+
+            # let the flag pass the prox sensor
+            sleep(5)
+
+            # get the current time
+            start_time = datetime.now()
             while cycle_count > 0:
                 # TODO: play with this
                 sleep(.01)
@@ -75,9 +85,18 @@ class Composter:
                 if self.read_input("prox") and prox_enabled == False:
                     prox_enabled = True
                     cycle_count -= 1
-                    sleep(5)
+                    if cycle_count > 0:
+                        #sleep to account for the flag going past the proximity sensor
+                        sleep(5)
                 elif not self.read_input("prox") and prox_enabled == True:
                     prox_enabled =  False
+
+                # make sure we don't run forever
+                if (datetime.now() - start_time).total_seconds() > 5 * 60:
+                    logger.warning("Run time exceeded 5 minutes, stopping")
+                    break
+
+            self.disable_forward()
 
         elif time_seconds is not None: # time_seconds is not None
             logger.info(f"Running composter for {time_seconds} seconds")
@@ -86,8 +105,7 @@ class Composter:
             self.disable_forward()
 
     def auto_run(self) -> None:
-        #if self.can_run_in_auto():
-        if True:
+        if self.can_run_in_auto():
             self.auto_ran_today = True
             self.enable_prox_switch()
             self.run(cycle_count = self.auto_run_cycle_count)
@@ -120,6 +138,7 @@ class Composter:
 
     def enable_forward(self) -> None:
         logger.debug(f"Running forward ")
+        self.outputs["reverse"].disable()
         self.outputs["forward"].enable()
 
     def disable_forward(self) -> None:
@@ -128,6 +147,7 @@ class Composter:
 
     def enable_reverse(self) -> None:
         logger.debug(f"Running reverse")
+        self.outputs["forward"].disable()
         self.outputs["reverse"].enable()
 
     def disable_reverse(self) -> None:
