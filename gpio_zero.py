@@ -10,7 +10,7 @@ from gpio_interface import GPIOInputInterface, GPIOOutputInterface
 
 from gpiozero import Button, OutputDevice
 
-log_file = "rotbot.log"
+log_file = "gpiozero.log"
 max_log_size = 1024 * 1024  # 1 MB
 backup_count = 5
 
