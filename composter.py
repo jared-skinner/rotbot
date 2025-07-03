@@ -25,11 +25,8 @@ class Composter:
         self.rotation_counter = 0
 
         self.auto_ran_today = False
-        #self.auto_run_start_time = time(2, 0)  # 2:00 AM in 24-hour format
-        #self.auto_run_ignore_time = time(6, 0)  # 6:00 AM in 24-hour format
-
-        self.auto_run_start_time = time(12, 50)  # 12:50 PM in 24-hour format
-        self.auto_run_ignore_time = time(13, 0)  # 1:00 PM in 24-hour format
+        self.auto_run_start_time = time(2, 0)  # 2:00 AM in 24-hour format
+        self.auto_run_ignore_time = time(6, 0)  # 6:00 AM in 24-hour format
 
         self.auto_run_cycle_count = 4
 
