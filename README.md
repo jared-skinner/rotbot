@@ -25,7 +25,7 @@ Rotbot is designed to be run on a raspberry pi using the gpio_zero library.  See
 
 * Copy the file service/rotbot.service into /etc/systemd/system/rotbot.service
 
-* Ensure that the rootpath and configpath variables in rotbot.py are set correctly for your system.
+* Ensure that the workingDirectory and ExecStart variables in rotbot.py are set correctly for your system.
 
 * Run the following commands to enable and start the service:
 

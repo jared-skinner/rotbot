@@ -5,7 +5,7 @@ from logging.handlers import RotatingFileHandler
 
 from time import sleep
 
-log_file = "composter.log"
+log_file = "logs/composter.log"
 max_log_size = 1024 * 1024  # 1 MB
 backup_count = 5
 

@@ -6,7 +6,7 @@ from time import sleep
 from composter import Composter
 from gpio_zero import GPIOZeroInput as PiInput, GPIOZeroOutput as PiOutput
 
-log_file = "rotbot.log"
+log_file = "logs/rotbot.log"
 max_log_size = 1024 * 1024  # 1 MB
 backup_count = 2
 
