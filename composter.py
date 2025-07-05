@@ -112,6 +112,7 @@ class Composter:
                 if self.read_input("prox"):
                     break
 
+            logger.info("Proximity switch activated, stopping")
             self.disable_prox_switch()
             self.disable_forward()
 
@@ -121,6 +122,7 @@ class Composter:
             self.enable_prox_switch()
             self.run(cycle_count = self.auto_run_cycle_count)
             self.increment_day_counter()
+            logger.info("Proximity switch activated, stopping")
             self.disable_prox_switch()
             logger.info("Auto run executed")
         else:
