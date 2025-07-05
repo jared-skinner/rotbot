@@ -145,7 +145,7 @@ class Composter:
 
     def disable_prox_switch(self) -> None:
         self.outputs["prox"].disable()
-        logger.info("Proximity switch disabled")
+        logger.debug("Proximity switch disabled")
 
     def enable_forward(self) -> None:
         logger.debug(f"Running forward ")
