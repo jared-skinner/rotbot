@@ -19,7 +19,7 @@ Rotbot is a simple program designed to control a drum composter through a steppe
 
 ## Dependencies
 
-Rotbot is designed to be run on a raspberry pi using the gpio_zero library.  See 
+Rotbot is designed to be run on a raspberry pi using the gpio_zero library.  See https://gpiozero.readthedocs.io/en/latest/ for more information.
 
 ## Installation
 
