@@ -33,3 +33,10 @@ Rotbot is designed to be run on a raspberry pi using the gpio_zero library.  See
 sudo systemctl enable rotbot.service
 sudo systemctl start rotbot.service
 ```
+
+## Pictures
+
+![alt text](impage/composter_1.jpg "Composter 1")
+![alt text](impage/composter_2.jpg "Composter 2")
+![alt text](impage/composter_3.jpg "Composter 3")
+![alt text](impage/composter_4.jpg "Composter 4")
