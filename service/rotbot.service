@@ -4,7 +4,7 @@
 
     [Service]
     Type=simple
-    User=skins0gr
+    User={USER TO RUN AS}
     WorkingDirectory={WORKING DIR PATH}
     ExecStart=/usr/bin/python3 {ROTBOT MAIN PATH}
     Restart=on-failure
