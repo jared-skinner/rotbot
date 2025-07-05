@@ -39,4 +39,3 @@ sudo systemctl start rotbot.service
 ![alt text](pictures/composter_1.jpg "Composter 1")
 ![alt text](pictures/composter_2.jpg "Composter 2")
 ![alt text](pictures/composter_3.jpg "Composter 3")
-![alt text](pictures/composter_4.jpg "Composter 4")
