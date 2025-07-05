@@ -39,12 +39,17 @@ def main(composter: Composter, sleep_time:float = 0.1) -> None:
 
     while True:
         logger.debug("STARTING LOOP")
-        logger.debug("Disable Prox Switch - For Safety")
+
         # disable prox sensor every cycle for safety
+        # This switch has 120v going to it.  If the
+        # wire got cut, we don't want this on to prevent
+        # this, we only have prox switch enabled when an 
+        # auto or extended run is going on.  
+        logger.debug("Disable Prox Switch - For Safety")
         composter.disable_prox_switch()
 
-        logger.debug("\nReset Auto Run Flag - Just after midnight")
         # reset auto run if necessary
+        logger.debug("\nReset Auto Run Flag - Just after midnight")
         composter.reset_auto_run()
 
         # clear forward/reverse, if necessary
@@ -58,10 +63,8 @@ def main(composter: Composter, sleep_time:float = 0.1) -> None:
         logger.debug("\nManual Actions")
         if composter.read_input("manual"):
             if composter.read_input("forward"):
-                # make it so this doesn't start and stop
                 composter.enable_forward()
             elif composter.read_input("reverse"):
-                # make it so this doesn't start and stop
                 composter.enable_reverse()
             elif composter.read_input("ext_run"):
                 run_time = 15 * 60 # 15 minutes
@@ -70,8 +73,6 @@ def main(composter: Composter, sleep_time:float = 0.1) -> None:
         logger.debug("Auto Actions")
         if composter.read_input("auto"):
             composter.auto_run()
-        else: # off
-            pass
 
         sleep(sleep_time)
         logger.debug("ENDING LOOP\n\n")
