@@ -1,0 +1,13 @@
+[Unit]
+    Description=Python Composter Service
+    After=network.target
+
+    [Service]
+    Type=simple
+    User={USER TO RUN AS}
+    WorkingDirectory={WORKING DIR PATH}
+    ExecStart=/usr/bin/python3 {ROTBOT MAIN PATH}
+    Restart=on-failure
+
+    [Install]
+    WantedBy=multi-user.target
