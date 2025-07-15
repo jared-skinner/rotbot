@@ -1,0 +1,19 @@
+{
+  "auto": "auto",
+  "10": "off",
+
+  "manual": "manual",
+  "9": "off",
+
+  "forward": "forward",
+  "11": "off",
+
+  "reverse": "reverse",
+  "5": "off",
+
+  "prox": "DON'T TOUCH",
+  "6": "off",
+
+  "ext_run": "ext_run",
+  "13": "on"
+}
