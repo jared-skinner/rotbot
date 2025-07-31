@@ -29,7 +29,7 @@ logger.addHandler(handler)
 class GPIOZeroInput(GPIOInputInterface):
     def __init__(self, name, pin_number):
         super().__init__(name, pin_number)
-        factory = RPiGPIOFactory()
+        factory = PiGPIOFactory()
         self.pin = Button(pin_number, pin_factory=factory)
 
     def read(self) -> bool:
@@ -40,7 +40,7 @@ class GPIOZeroInput(GPIOInputInterface):
 class GPIOZeroOutput(GPIOOutputInterface):
     def __init__(self, name,pin_number):
         super().__init__(name, pin_number)
-        factory = RPiGPIOFactory()
+        factory = PiGPIOFactory()
         self.pin = OutputDevice(pin_number, active_high=False, initial_value=False, pin_factory=factory)
 
     def enable(self) -> None:
