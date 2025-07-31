@@ -7,8 +7,7 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 from gpio_interface import GPIOInputInterface, GPIOOutputInterface
-
-from gpiozero import Button, OutputDevice
+from gpio_zero import Button, OutputDevice
 
 log_file = "logs/gpiozero.log"
 max_log_size = 1024 * 1024  # 1 MB
