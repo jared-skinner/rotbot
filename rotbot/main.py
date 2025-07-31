@@ -8,8 +8,7 @@ from time import sleep
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from composter import Composter
-#from gpio.gpio_zero import GPIOZeroInput as PiInput, GPIOZeroOutput as PiOutput
-from gpio.gpio_mock import MockGPIOInput as PiInput, MockGPIOOutput as PiOutput
+from gpio.gpio_zero import GPIOZeroInput as PiInput, GPIOZeroOutput as PiOutput
 
 log_file = "logs/rotbot.log"
 max_log_size = 1024 * 1024  # 1 MB
