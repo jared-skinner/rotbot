@@ -47,11 +47,10 @@ def main(fountain: Fountain, sleep_time:float = 0.1) -> None:
     while True:
         logger.debug("STARTING LOOP")
 
-        logger.debug("\nManual Actions")
-
-        if not fountain.read_input("manual"):
+        if not fountain.read_input("manual") and not fountain.read_input("auto"):
             fountain.stop()
 
+        logger.debug("\nManual Actions")
         if fountain.read_input("manual"):
             fountain.start()
 
