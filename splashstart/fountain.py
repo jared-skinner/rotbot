@@ -10,7 +10,7 @@ max_log_size = 1024 * 1024  # 1 MB
 backup_count = 5
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 handler = RotatingFileHandler(log_file, maxBytes=max_log_size, backupCount=backup_count)
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')

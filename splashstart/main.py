@@ -48,6 +48,10 @@ def main(fountain: Fountain, sleep_time:float = 0.1) -> None:
         logger.debug("STARTING LOOP")
 
         logger.debug("\nManual Actions")
+
+        if not fountain.read_input("manual"):
+            fountain.stop()
+
         if fountain.read_input("manual"):
             fountain.start()
 
