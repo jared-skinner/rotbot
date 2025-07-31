@@ -4,6 +4,7 @@ https://gpiozero.readthedocs.io/
 """
 
 import logging
+import os
 import sys
 from logging.handlers import RotatingFileHandler
 
