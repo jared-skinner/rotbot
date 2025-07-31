@@ -38,8 +38,11 @@ spashstart
 def main(fountain: Fountain, sleep_time:float = 0.1) -> None:
     print_header()
 
-    start_time = time(0, 0)
-    end_time = time(0, 0)
+    morning_start_time = time(6, 0)
+    morning_end_time = time(8, 0)
+
+    evening_start_time = time(17, 0)
+    evening_end_time = time(22, 0)
 
     while True:
         logger.debug("STARTING LOOP")
@@ -51,7 +54,7 @@ def main(fountain: Fountain, sleep_time:float = 0.1) -> None:
         logger.debug("Auto Actions")
         now = datetime.now().time()
         if fountain.read_input("auto"):
-            if now >= start_time and now < end_time:
+            if (now >= morning_start_time and now < morning_end_time) or (now >= evening_start_time and now < evening_end_time):
                 fountain.start()
             else:
                 fountain.stop()
