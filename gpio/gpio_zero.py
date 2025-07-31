@@ -4,6 +4,7 @@ https://gpiozero.readthedocs.io/
 """
 
 import logging
+import sys
 from logging.handlers import RotatingFileHandler
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
