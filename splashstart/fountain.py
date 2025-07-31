@@ -29,7 +29,7 @@ class Fountain:
         }
 
         self.outputs = {
-            "fountain_output": Output("fountain_output", 14),
+            "fountain_output": Output("fountain_output", 23),
         }
 
         self.clear_outputs()
