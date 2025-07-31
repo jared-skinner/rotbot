@@ -6,8 +6,10 @@ https://gpiozero.readthedocs.io/
 import logging
 from logging.handlers import RotatingFileHandler
 
-from gpio_interface import GPIOInputInterface, GPIOOutputInterface
-from gpio_zero import Button, OutputDevice
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+
+from gpio.gpio_interface import GPIOInputInterface, GPIOOutputInterface
+from gpiozero import Button, OutputDevice
 
 log_file = "logs/gpiozero.log"
 max_log_size = 1024 * 1024  # 1 MB
