@@ -24,12 +24,12 @@ class Fountain:
         logger.info("Initializing Fountain")
 
         self.inputs = {
-            "auto": Input("auto", 10),
-            "manual": Input("manual", 9),
+            "auto": Input("auto", 24),
+            "manual": Input("manual", 25),
         }
 
         self.outputs = {
-            "fountain_output": Output("fountain_output", 2),
+            "fountain_output": Output("fountain_output", 14),
         }
 
         self.clear_outputs()
