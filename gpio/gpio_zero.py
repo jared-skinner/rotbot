@@ -12,6 +12,9 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from gpio.gpio_interface import GPIOInputInterface, GPIOOutputInterface
 from gpiozero import Button, OutputDevice
+from gpiozero.pins.rpigpio import RPiGPIOFactory
+
+factory = RPiGPIOFactory()
 
 log_file = "logs/gpiozero.log"
 max_log_size = 1024 * 1024  # 1 MB
@@ -28,7 +31,7 @@ logger.addHandler(handler)
 class GPIOZeroInput(GPIOInputInterface):
     def __init__(self, name, pin_number):
         super().__init__(name, pin_number)
-        self.pin = Button(pin_number)
+        self.pin = Button(pin_number, pin_factory=factory)
 
     def read(self) -> bool:
         """Read the state of the GPIO input pin."""
@@ -38,7 +41,7 @@ class GPIOZeroInput(GPIOInputInterface):
 class GPIOZeroOutput(GPIOOutputInterface):
     def __init__(self, name,pin_number):
         super().__init__(name, pin_number)
-        self.pin = OutputDevice(pin_number, active_high=False, initial_value=False)
+        self.pin = OutputDevice(pin_number, active_high=False, initial_value=False, pin_factory=factory)
 
     def enable(self) -> None:
         """Enable the GPIO output pin."""
