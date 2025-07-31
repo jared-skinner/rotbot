@@ -10,7 +10,7 @@ max_log_size = 1024 * 1024  # 1 MB
 backup_count = 5
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 handler = RotatingFileHandler(log_file, maxBytes=max_log_size, backupCount=backup_count)
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
@@ -40,6 +40,7 @@ class Fountain:
             output.disable()
 
     def read_input(self, input_name: str) -> bool:
+        logger.debug(f"reading {input_name}: {self.inputs[input_name].read()}")
         return self.inputs[input_name].read()
 
     def start(self) -> None:
