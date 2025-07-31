@@ -10,8 +10,8 @@ from time import sleep
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from fountain import Fountain
-#from gpio.gpio_zero import GPIOZeroInput as PiInput, GPIOZeroOutput as PiOutput
-from gpio.gpio_mock import MockGPIOInput as PiInput, MockGPIOOutput as PiOutput
+from gpio.gpio_zero import GPIOZeroInput as PiInput, GPIOZeroOutput as PiOutput
+#from gpio.gpio_mock import MockGPIOInput as PiInput, MockGPIOOutput as PiOutput
 
 log_file = "logs/splashstart.log"
 max_log_size = 1024 * 1024  # 1 MB
