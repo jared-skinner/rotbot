@@ -42,7 +42,7 @@ def main(fountain: Fountain, sleep_time:float = 0.1) -> None:
     morning_end_time = time(8, 0)
 
     evening_start_time = time(17, 0)
-    evening_end_time = time(22, 0)
+    evening_end_time = time(21, 0)
 
     while True:
         logger.debug("STARTING LOOP")
